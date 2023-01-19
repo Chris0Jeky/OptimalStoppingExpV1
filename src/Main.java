@@ -6,8 +6,31 @@ public class Main {
 
         ArrayList<Integer> list = addRandomNumbers();
         System.out.println(list);
-        System.out.println(percentageToActual(list.size()));
+        System.out.println();
 
+        //create function called researchAndExploit
+        researchAndExploit(list, percentageToActual(list.size()));
+
+
+    }
+
+    private static void researchAndExploit(ArrayList<Integer> list, int optimalStoppingPoint) {
+        int highestValue = 0;
+        for (int i = 0; i < optimalStoppingPoint && i < list.size(); i++) {
+            if (list.get(i) > highestValue) {
+                highestValue = list.get(i);
+            }
+        }
+        for (int i = optimalStoppingPoint; i < list.size(); i++) {
+            if (list.get(i) >= highestValue) {
+                System.out.println("Found a better or equal value at index " + i);
+                System.out.println("The value is " + list.get(i));
+                return;
+            }
+        }
+        System.out.println("No better or equal value found");
+        highestValue = list.get(list.size() - 1);
+        System.out.println("The highest value is " + highestValue);
     }
 
     private static int percentageToActual() {
