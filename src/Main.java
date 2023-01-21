@@ -13,26 +13,49 @@ public class Main {
         System.out.println();
         System.out.println(researchAndExploit(list, percentageToActual(length, percentage)));
         addValuesToList(length, percentageToActual(length, percentage));
-        System.out.println(matrix);
+        matrix = addToMatrix(matrix, 100, 0, 100);
+
+        matrixAnalysis(matrix);
 
 
     }
 
+    /*
+    This block of code defines a method called "matrixAnalysis" which takes in a 2D ArrayList of integers as an input.
+    Within the method, a for-each loop is used to iterate over each ArrayList within the matrix
+    Within the loop, a Double variable called "average" is defined and assigned the average value of the integers in the current ArrayList
+    The average value is then printed to the console
+     */
+    private static void matrixAnalysis (ArrayList<ArrayList<Integer>> matrix){
+        for (ArrayList<Integer> listOfInts: matrix) {
+            Double average = listOfInts.stream().mapToInt(val -> val).average().orElse(0.0);
+            System.out.println(average);
+        }
+    }
+
+
+    /*
+    This block of code defines a method called "addToMatrix" which takes in a 2D ArrayList of integers, an integer length, an integer percentage, and an integer matrixLength as inputs
+    Within the method, a for loop is used to iterate over a range of values from 0 to matrixLength
+    Within the loop, an integer variable called "optimalStoppingPoint" is defined and assigned the value of a method called "percentageToActual" which takes in the length and percentage + i as inputs
+    A new ArrayList of integers is defined and assigned the value of a method called "addValuesToList" which takes in the length and optimalStoppingPoint as inputs
+    The newly created ArrayList is then added to the input matrix
+    The input matrix is then returned as output.
+
+     */
     private static ArrayList<ArrayList<Integer>> addToMatrix(ArrayList<ArrayList<Integer>> matrix, int length, int percentage, int matrixLength) {
         for (int i = 0; i < matrixLength; i++) {
-            ArrayList<Integer> list = new ArrayList<Integer>();
-            for (int j = 0; j < percentage; j++) {
-                list.add(j);
-            }
+            int optimalStoppingPoint = percentageToActual(length, percentage + i);
+            ArrayList<Integer> list = addValuesToList(length, optimalStoppingPoint);
             matrix.add(list);
         }
-        ArrayList<Integer> list = addValuesToList(length, percentage);
-        matrix.add(list);
         return matrix;
     }
 
-
-
+    //This method creates an empty ArrayList of integers called "list" and then iterates through a loop that runs "length" times.
+    //On each iteration, it creates another ArrayList of integers called "randomList" by calling the addRandomNumbers method, passing the length as a parameter.
+    //It then adds the result of calling the researchAndExploit method, passing both the randomList and the optimalStoppingPoint as parameters, to the "list" ArrayList.
+    //Finally, the method returns the "list" ArrayList with all the added values.
     private static ArrayList<Integer> addValuesToList (int length, int optimalStoppingPoint) {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < length; i++) {
